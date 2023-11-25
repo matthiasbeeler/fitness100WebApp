@@ -1,0 +1,25 @@
+{
+  "background_color": "#ececec",
+  "description": "Fitness100",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Fitness100",
+  "orientation": "natural",
+  "scope": "/",
+  "short_name": "F100",
+  "start_url": "/",
+  "theme_color": "#ececec",
+  "categories": [
+    "sports"
+  ],
+  "screenshots": [],
+  "icons": [
+    {
+      "src": "/images/favico.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": []
+}
