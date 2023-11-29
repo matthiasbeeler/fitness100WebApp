@@ -48,9 +48,10 @@ router.all("*", function (req, res, next) {
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   database.query(
-    `SELECT *,Date_Format(date, '%d.%m.%Y') as dateNew FROM ateliers where CURDATE() <= date ORDER by date asc LIMIT 4;`,
+    `SELECT * FROM workouts where workoutCode = ?;`,[jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).code],
     function (err, results, fields) {
-      var ateliers = results;
+      var workout = results;
+      console.log(err)
       if(err)  ateliers = [];
       database.query(
         `SELECT COUNT(*) as inactive FROM accounts where active = 0;`,
@@ -59,7 +60,7 @@ router.get("/", function (req, res, next) {
           if(results[0].inactive > 0) inactives = true;
   res.render("loggedin/home", {
     data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
-    ateliers: ateliers,
+    workout: workout,
     inactives: inactives
   });
 });
@@ -81,7 +82,7 @@ router.get("/account", function (req, res, next) {
           active: userData[0].active,
           firstName: userData[0].firstName,
           lastName: userData[0].lastName,
-          class: userData[0].class,
+          code: userData[0].code,
           admin: userData[0].admin,
           registrationTimestamp: userData[0].registrationTimestamp,
           profileImageUpdate: userData[0].profilePictureUpdate,
@@ -172,3 +173,6 @@ router.get("/logout", (req, res) => {
 });
 
 module.exports = router;
+
+
+console.log(Math.random().toString(16).substr(2, 4)+"-"+Math.random().toString(16).substr(2, 4)+"-"+Math.random().toString(16).substr(2, 4))

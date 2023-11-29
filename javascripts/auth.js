@@ -63,7 +63,7 @@ exports.login = function (request, response, database, bouncer) {
             active: userData[0].active,
             firstName: userData[0].firstName,
             lastName: userData[0].lastName,
-            class: userData[0].class,
+            code: userData[0].code,
             admin: admin,
             registrationTimestamp: userData[0].registrationTimestamp,
             profileImageUpdate: userData[0].profilePictureUpdate
@@ -101,7 +101,7 @@ exports.signup = function (request, response, database) {
       return response.json({ success: false, error: 1 });
     var firstName = request.body.firstName;
     var lastName = request.body.lastName;
-    var grade = request.body.class;
+    var workoutCode = request.body.code;
     var password = request.body.password;
     var email = request.body.email;
     console.log(request.body);
@@ -109,7 +109,7 @@ exports.signup = function (request, response, database) {
       validator.isEmpty(firstName) ||
       validator.isEmpty(email) ||
       validator.isEmpty(lastName) ||
-      validator.isEmpty(grade) ||
+      validator.isEmpty(workoutCode) ||
       validator.isEmpty(password)
     )
       return response.json({ success: false, error: 1, message:"Bitte fülle alle Felder aus." });
@@ -124,13 +124,13 @@ exports.signup = function (request, response, database) {
         var uuid = uuidv4();
 
         database.query(
-          `INSERT INTO accounts (id, firstName,lastName, email, class, password, active, registrationTimestamp) VALUES (?,?,?,?,?,?,?,?);`,
+          `INSERT INTO accounts (id, firstName,lastName, email, code, password, active, registrationTimestamp) VALUES (?,?,?,?,?,?,?,?);`,
           [
             uuid,
             firstName,
             lastName,
             email,
-            grade,
+            workoutCode,
             crypto
               .createHash("sha256")
               .update(password + process.env.salt)
@@ -150,7 +150,7 @@ exports.signup = function (request, response, database) {
                 active: false,
                 firstName: firstName,
                 lastName: lastName,
-                class: grade,
+                code: workoutCode,
                 admin: false,
                 email: email,
                 registrationTimestamp: Date.now()

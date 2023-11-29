@@ -1,0 +1,267 @@
+{
+  "week": {
+    "monday": "Pull",
+    "tuesday": "Push",
+    "wednesday": "Legs",
+    "thursday": null,
+    "friday": "Pull",
+    "saturday": "Push",
+    "sunday": "Legs"
+  },
+  "workouts": {
+    "monday": [
+      {
+        "Deadlifts": {
+          "description": "Lift the bar",
+          "image": "https://losefateatright.com/wp-content/uploads/2016/01/barbell-deadlifts.png",
+          "sets": 2,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Lat pulldown": {
+          "description": "Pull the bar down",
+          "image": "https://www.anytimefitness.com/wp-content/uploads/2020/07/AdobeStock_104343900-1-2048x1365.jpeg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Seated row": {
+          "description": "Pull the handle",
+          "image": "https://i.ytimg.com/vi/1lIDl-9wWaM/maxresdefault.jpg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Cable face pulls": {
+          "description": "Pull the rope towards your head",
+          "image": "http://weighttraining.guide/wp-content/uploads/2016/10/Face-pull.png",
+          "sets": 5,
+          "repetitions": "15"
+        }
+      },
+      {
+        "Hammer curl": {
+          "description": "Curl like a hammer",
+          "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
+          "sets": 4,
+          "repetitions": "8"
+        }
+      }
+    ],
+    "tuesday": [
+      {
+        "Deadlifts2": {
+          "description": "Lift the bar",
+          "image": "https://losefateatright.com/wp-content/uploads/2016/01/barbell-deadlifts.png",
+          "sets": 2,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Lat pulldown": {
+          "description": "Pull the bar down",
+          "image": "https://www.anytimefitness.com/wp-content/uploads/2020/07/AdobeStock_104343900-1-2048x1365.jpeg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Seated row": {
+          "description": "Pull the handle",
+          "image": "https://i.ytimg.com/vi/1lIDl-9wWaM/maxresdefault.jpg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Cable face pulls": {
+          "description": "Pull the rope towards your head",
+          "image": "http://weighttraining.guide/wp-content/uploads/2016/10/Face-pull.png",
+          "sets": 5,
+          "repetitions": "15"
+        }
+      },
+      {
+        "Hammer curl": {
+          "description": "Curl like a hammer",
+          "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
+          "sets": 4,
+          "repetitions": "8"
+        }
+      }
+    ],
+    "wednesday": [
+      {
+        "Deadlifts3": {
+          "description": "Lift the bar",
+          "image": "https://losefateatright.com/wp-content/uploads/2016/01/barbell-deadlifts.png",
+          "sets": 2,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Lat pulldown": {
+          "description": "Pull the bar down",
+          "image": "https://www.anytimefitness.com/wp-content/uploads/2020/07/AdobeStock_104343900-1-2048x1365.jpeg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Seated row": {
+          "description": "Pull the handle",
+          "image": "https://i.ytimg.com/vi/1lIDl-9wWaM/maxresdefault.jpg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Cable face pulls": {
+          "description": "Pull the rope towards your head",
+          "image": "http://weighttraining.guide/wp-content/uploads/2016/10/Face-pull.png",
+          "sets": 5,
+          "repetitions": "15"
+        }
+      },
+      {
+        "Hammer curl": {
+          "description": "Curl like a hammer",
+          "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
+          "sets": 4,
+          "repetitions": "8"
+        }
+      }
+    ],
+    "thursday": [
+    ],
+    "friday": [
+      {
+        "Deadlifts4": {
+          "description": "Lift the bar",
+          "image": "https://losefateatright.com/wp-content/uploads/2016/01/barbell-deadlifts.png",
+          "sets": 2,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Lat pulldown": {
+          "description": "Pull the bar down",
+          "image": "https://www.anytimefitness.com/wp-content/uploads/2020/07/AdobeStock_104343900-1-2048x1365.jpeg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Seated row": {
+          "description": "Pull the handle",
+          "image": "https://i.ytimg.com/vi/1lIDl-9wWaM/maxresdefault.jpg",
+          "sets": 3,
+          "repetitions": "8"
+        }
+      },
+      {
+        "Cable face pulls": {
+          "description": "Pull the rope towards your head",
+          "image": "http://weighttraining.guide/wp-content/uploads/2016/10/Face-pull.png",
+          "sets": 5,
+          "repetitions": "15"
+        }
+      },
+      {
+        "Hammer curl": {
+          "description": "Curl like a hammer",
+          "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
+          "sets": 4,
+          "repetitions": "8"
+        }
+      }
+    ],
+    "saturday": [
+        {
+          "Deadlifts5": {
+            "description": "Lift the bar",
+            "image": "https://losefateatright.com/wp-content/uploads/2016/01/barbell-deadlifts.png",
+            "sets": 2,
+            "repetitions": "8"
+          }
+        },
+        {
+          "Lat pulldown": {
+            "description": "Pull the bar down",
+            "image": "https://www.anytimefitness.com/wp-content/uploads/2020/07/AdobeStock_104343900-1-2048x1365.jpeg",
+            "sets": 3,
+            "repetitions": "8"
+          }
+        },
+        {
+          "Seated row": {
+            "description": "Pull the handle",
+            "image": "https://i.ytimg.com/vi/1lIDl-9wWaM/maxresdefault.jpg",
+            "sets": 3,
+            "repetitions": "8"
+          }
+        },
+        {
+          "Cable face pulls": {
+            "description": "Pull the rope towards your head",
+            "image": "http://weighttraining.guide/wp-content/uploads/2016/10/Face-pull.png",
+            "sets": 5,
+            "repetitions": "15"
+          }
+        },
+        {
+          "Hammer curl": {
+            "description": "Curl like a hammer",
+            "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
+            "sets": 4,
+            "repetitions": "8"
+          }
+        }
+      ],
+      "sunday": [
+        {
+          "Deadlifts6": {
+            "description": "Lift the bar",
+            "image": "https://losefateatright.com/wp-content/uploads/2016/01/barbell-deadlifts.png",
+            "sets": 2,
+            "repetitions": "8"
+          }
+        },
+        {
+          "Lat pulldown": {
+            "description": "Pull the bar down",
+            "image": "https://www.anytimefitness.com/wp-content/uploads/2020/07/AdobeStock_104343900-1-2048x1365.jpeg",
+            "sets": 3,
+            "repetitions": "8"
+          }
+        },
+        {
+          "Seated row": {
+            "description": "Pull the handle",
+            "image": "https://i.ytimg.com/vi/1lIDl-9wWaM/maxresdefault.jpg",
+            "sets": 3,
+            "repetitions": "8"
+          }
+        },
+        {
+          "Cable face pulls": {
+            "description": "Pull the rope towards your head",
+            "image": "http://weighttraining.guide/wp-content/uploads/2016/10/Face-pull.png",
+            "sets": 5,
+            "repetitions": "15"
+          }
+        },
+        {
+          "Hammer curl": {
+            "description": "Curl like a hammer",
+            "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
+            "sets": 4,
+            "repetitions": "8"
+          }
+        }
+      ]
+  }
+}
