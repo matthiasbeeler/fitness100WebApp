@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 exports.checkActivationStatus = function (request, response, database) {
-  var jwtData = jwt.verify(request.cookies.NyvAuth, process.env.jwtSecret);
+  var jwtData = jwt.verify(request.cookies.FitnessAuth, process.env.jwtSecret);
   if(jwtData.active) return response.json({success: true});
   database.query(
     `SELECT * FROM accounts WHERE id = ?`,[jwtData.id],function (error, results, fields) {
@@ -11,7 +11,7 @@ exports.checkActivationStatus = function (request, response, database) {
                   jwtData,
                 process.env.jwtSecret
               );
-              response.cookie("NyvAuth", token, {
+              response.cookie("FitnessAuth", token, {
                 maxAge: 9999 * 60 * 60 * 1000,
                 httpOnly: false,
                 overwrite: true,

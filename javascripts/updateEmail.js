@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
 exports.updateEmail = function (request, response, database) {
-    var jwtData = jwt.verify(request.cookies.NyvAuth, process.env.jwtSecret);
+    var jwtData = jwt.verify(request.cookies.FitnessAuth, process.env.jwtSecret);
     var email = request.body.email;
     var password = request.body.password;
     try {

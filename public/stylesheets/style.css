@@ -140,6 +140,7 @@ body, html{
   font-size: 100%;
   font-weight: 600;
 }
+
 .lightText{
   font-weight: normal
 }
@@ -684,6 +685,38 @@ div.fileInput{
   backdrop-filter: blur(5px);
   background-color: #ffffffa8;
 }
+.workoutOverlay{
+  width: 100%;
+  display: none;
+  min-height: 100vh;
+  background-color: var(--mainInfoColour);
+  position: fixed;
+  top: 0px;
+  z-index: 100;
+  height: 100vh;
+}
+.workoutOverlay .innerOverlay{
+  height: 90%;
+  position: relative;
+  overflow-y: scroll;
+}
+
+.workoutOverlay .innerOverlay img{
+  width: 94%;
+  height: auto;
+  border-radius: 20px;
+  margin-left: 3%;
+}
+
+.workout{
+  background-color: var(--lightBackgroundColour);
+  border-radius: 20px;
+  padding: 1%;
+  width: 90%;
+  margin-left: 5%;
+}
+
+
 .singleAtelierParticipantContainer{
   float: left;
   clear: none; 

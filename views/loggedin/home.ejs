@@ -32,7 +32,18 @@
 
                   <div class="spacing5"></div>
                   <div class="workoutContent">
-                   
+                   <div class="workoutOverlay">
+                    <div class="backButton" onclick="$(this).parent().hide()">
+                      <img class="svgWhite" src="/images/back.svg" alt="">
+                  </div>
+                  <div class="titleH1 title actualTitle">
+                    
+                  </div>
+                  <div class="spacing5"></div>
+                  <div class="innerOverlay">
+
+                  </div>
+                   </div>
                     <% function getDayName(dateStr, locale) { var date=new Date(dateStr); return
                       date.toLocaleDateString(locale, { weekday: 'long' }); } %>
 
@@ -74,7 +85,7 @@
          
           
           </div>
-          <div class="smallSubmitText submitButton submitDiv" onclick="">
+          <div class="smallSubmitText submitButton submitDiv" onclick="showWorkout('${element}')">
             Infos anzeigen
           </div>
 
@@ -85,7 +96,6 @@
         var workout = ""
         data.workouts[element].forEach(element => {
           for (var key in element) {
-          console.log(key)
           workout = workout + "<li>"+key+"</li>"
         }
         });
@@ -94,14 +104,39 @@
         $('.atelierContainer.'+element+' .infoList').append(workout)
                           });
                         </script>
-                        <p>
-                          <%=JSON.stringify(workout[0].excercises)%>
-                        </p>
+                        
                         <% } %>
 
                   </div>
       </div>
       <%- include('../modules/footer.ejs')%>
     </body>
-
   </html>
+
+  <script>
+    function showWorkout(day) {
+
+      $('.workoutOverlay').show()
+      $('.workoutOverlay .titleH1').html(data.week[day])
+      $('.workoutOverlay .innerOverlay').html("")
+      data.workouts[day].forEach(element => {
+        for (var key in element) {
+          var obj = `
+          <div class="workout grayShadowNoOffset ${key}">
+        <div class="titleH2 info">
+          ${key}
+</div>
+<img src="${element[key].image}" alt="" loading="lazy">
+<div class="titleH4 lightText">
+                              ${element[key].description}
+                    </div>
+                  </div>
+
+                    <div class="spacing5"></div>
+        `
+        }
+        
+  $('.innerOverlay').append(obj)
+      });
+    }
+  </script>

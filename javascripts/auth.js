@@ -71,7 +71,7 @@ exports.login = function (request, response, database, bouncer) {
           process.env.jwtSecret
         );
         bouncer.reset(request);
-        response.cookie("NyvAuth", token, {
+        response.cookie("FitnessAuth", token, {
           maxAge: 9999 * 60 * 60 * 1000,
           httpOnly: false,
           overwrite: true,
@@ -157,7 +157,7 @@ exports.signup = function (request, response, database) {
               },
               process.env.jwtSecret
             );
-            response.cookie("NyvAuth", token, {
+            response.cookie("FitnessAuth", token, {
               maxAge: 9999 * 60 * 60 * 1000,
               httpOnly: false,
               overwrite: true,

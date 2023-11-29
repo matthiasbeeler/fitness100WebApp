@@ -13,12 +13,12 @@ const {
 
 router.all("*", function (req, res, next) {
   try {
-    if (req.cookies.NyvAuth) {
-      if (jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).loggedin)
+    if (req.cookies.FitnessAuth) {
+      if (jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).loggedin)
         return next();
     }
-    if (!req.cookies.NyvAuth) {
-      if (!jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).loggedin)
+    if (!req.cookies.FitnessAuth) {
+      if (!jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).loggedin)
         return res.redirect("/");
     }
   } catch (error) {
@@ -29,26 +29,26 @@ router.all("*", function (req, res, next) {
 });
 
 router.post("/checkActivationStatus", function (req, res, next) {
-  if (jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).active)
+  if (jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).active)
     return res.redirect("/user");
   checkActivationStatus(req, res, database);
 });
 
 router.get("/activationPending", function (req, res, next) {
-  if (jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).active)
+  if (jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).active)
     return res.redirect("/user");
   res.render("loggedin/account/activationPending", {
-    data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
   });
 });
 router.all("*", function (req, res, next) {
-  if (!jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).active) return res.redirect("/user/activationPending");
+  if (!jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).active) return res.redirect("/user/activationPending");
   next();
 });
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   database.query(
-    `SELECT * FROM workouts where workoutCode = ?;`,[jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).code],
+    `SELECT * FROM workouts where workoutCode = ?;`,[jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).code],
     function (err, results, fields) {
       var workout = results;
       console.log(err)
@@ -59,7 +59,7 @@ router.get("/", function (req, res, next) {
           var inactives = false;
           if(results[0].inactive > 0) inactives = true;
   res.render("loggedin/home", {
-    data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
     workout: workout,
     inactives: inactives
   });
@@ -71,7 +71,7 @@ router.get("/", function (req, res, next) {
 router.get("/account", function (req, res, next) {
   database.query(
     "SELECT * FROM accounts WHERE id = ?",
-    [jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret).id],
+    [jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).id],
     function (err, results, fields) {
       var userData = results;
       var token = jwt.sign(
@@ -89,7 +89,7 @@ router.get("/account", function (req, res, next) {
         },
         process.env.jwtSecret
       );
-      res.cookie("NyvAuth", token, {
+      res.cookie("FitnessAuth", token, {
         maxAge: 9999 * 60 * 60 * 1000,
         httpOnly: false,
         overwrite: true,
@@ -103,13 +103,13 @@ router.get("/account", function (req, res, next) {
 
 router.get("/account/personalDetails", function (req, res, next) {
   res.render("loggedin/account/personalDetails", {
-    data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
   });
 });
 
 router.get("/account/profileImage", function (req, res, next) {
   res.render("loggedin/account/profileImage", {
-    data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
   });
 });
 
@@ -119,7 +119,7 @@ router.post("/account/profileImage", function (req, res) {
 
 router.get("/account/emailUpdate", function (req, res, next) {
   res.render("loggedin/account/emailUpdate", {
-    data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
   });
 });
 
@@ -129,7 +129,7 @@ router.post("/account/emailUpdate", function (req, res, next) {
 
 router.get("/account/password", function (req, res, next) {
   res.render("loggedin/account/passwordUpdate", {
-    data: jwt.verify(req.cookies.NyvAuth, process.env.jwtSecret),
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
   });
 });
 
@@ -168,7 +168,7 @@ router.all("/uploads/profileImages/:id", function (req, res, next) {
 
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("NyvAuth");
+  res.clearCookie("FitnessAuth");
   res.redirect("/");
 });
 

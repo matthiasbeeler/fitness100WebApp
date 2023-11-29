@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 exports.updateImage = function (request, response, database) {
     try {
     const sharp = require('sharp');
-    var jwtData = jwt.verify(request.cookies.NyvAuth, process.env.jwtSecret);
+    var jwtData = jwt.verify(request.cookies.FitnessAuth, process.env.jwtSecret);
     var image = request.files.image;
     if(image.size > 5597152) return response.json({ success: false, message: "Your images size is too big" }); 
   sharp(image.data)

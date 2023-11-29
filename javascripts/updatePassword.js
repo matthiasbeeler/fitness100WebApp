@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 
 exports.updatePassword = function (request, response, database) {
-  var jwtData = jwt.verify(request.cookies.NyvAuth, process.env.jwtSecret);
+  var jwtData = jwt.verify(request.cookies.FitnessAuth, process.env.jwtSecret);
   var newPassword = request.body.newPassword;
   var password = request.body.oldPassword;
   try {
