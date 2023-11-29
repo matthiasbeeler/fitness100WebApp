@@ -96,7 +96,7 @@
         var workout = ""
         data.workouts[element].forEach(element => {
           for (var key in element) {
-          workout = workout + "<li>"+key+"</li>"
+          workout = workout + `<li>${key}  -  ${element[key].sets}x${element[key].repetitions} </li>`
         }
         });
         $('.titleH4.placeholderColour').first().html('Today')
@@ -112,10 +112,3 @@
       <%- include('../modules/footer.ejs')%>
     </body>
   </html>
-
-  <script>
-    function showWorkout(day) {
-
-      
-    }
-  </script>
