@@ -166,7 +166,28 @@ router.all("/uploads/profileImages/:id", function (req, res, next) {
   }
 });
 
+router.get("/:day", function (req, res, next) {
+  database.query(
+    `SELECT * FROM workouts where workoutCode = ?;`,[jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).code],
+    function (err, results, fields) {
+      var workout = results;
+      console.log(err)
+      if(err)  ateliers = [];
+      database.query(
+        `SELECT COUNT(*) as inactive FROM accounts where active = 0;`,
+        function (err, results, fields) {
+          var inactives = false;
+          if(results[0].inactive > 0) inactives = true;
+  res.render("loggedin/workoutInfo", {
+    data: jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret),
+    workout: workout,
+    inactives: inactives,
+    title: req.params.day
+  });
+});
+});
 
+})
 router.get("/logout", (req, res) => {
   res.clearCookie("FitnessAuth");
   res.redirect("/");

@@ -75,7 +75,7 @@
                     </div>
                     <div class="spacing5"></div>
 
-                            <div onclick="')" class="atelierContainer ${element}  grayShadowNoOffset">
+                            <div class="atelierContainer ${element}  grayShadowNoOffset">
           <div class="aterlierTitle titleH3 titleNoMargin">
             ${title}
           </div>
@@ -85,8 +85,8 @@
          
           
           </div>
-          <div class="smallSubmitText submitButton submitDiv" onclick="showWorkout('${element}')">
-            Infos anzeigen
+          <div class="smallSubmitText submitButton submitDiv" onclick="window.location = '/user/${element}'">
+           Show more
           </div>
 
         </div>
@@ -116,27 +116,6 @@
   <script>
     function showWorkout(day) {
 
-      $('.workoutOverlay').show()
-      $('.workoutOverlay .titleH1').html(data.week[day])
-      $('.workoutOverlay .innerOverlay').html("")
-      data.workouts[day].forEach(element => {
-        for (var key in element) {
-          var obj = `
-          <div class="workout grayShadowNoOffset ${key}">
-        <div class="titleH2 info">
-          ${key}
-</div>
-<img src="${element[key].image}" alt="" loading="lazy">
-<div class="titleH4 lightText">
-                              ${element[key].description}
-                    </div>
-                  </div>
-
-                    <div class="spacing5"></div>
-        `
-        }
-        
-  $('.innerOverlay').append(obj)
-      });
+      
     }
   </script>

@@ -695,13 +695,7 @@ div.fileInput{
   z-index: 100;
   height: 100vh;
 }
-.workoutOverlay .innerOverlay{
-  height: 90%;
-  position: relative;
-  overflow-y: scroll;
-}
-
-.workoutOverlay .innerOverlay img{
+ .innerWorkout img{
   width: 94%;
   height: auto;
   border-radius: 20px;
@@ -713,7 +707,12 @@ div.fileInput{
   border-radius: 20px;
   padding: 1%;
   width: 90%;
-  margin-left: 5%;
+  margin-left: 4%;
+}
+.workout .lightText{
+  font-family: sans-serif;
+  font-weight: normal;
+  padding: 2%;
 }
 
 
