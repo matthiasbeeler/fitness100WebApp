@@ -166,6 +166,11 @@ router.all("/uploads/profileImages/:id", function (req, res, next) {
   }
 });
 
+router.get("/logout", (req, res) => {
+  res.clearCookie("FitnessAuth");
+  res.redirect("/");
+});
+
 router.get("/:day", function (req, res, next) {
   database.query(
     `SELECT * FROM workouts where workoutCode = ?;`,[jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).code],
@@ -188,10 +193,7 @@ router.get("/:day", function (req, res, next) {
 });
 
 })
-router.get("/logout", (req, res) => {
-  res.clearCookie("FitnessAuth");
-  res.redirect("/");
-});
+
 
 module.exports = router;
 
