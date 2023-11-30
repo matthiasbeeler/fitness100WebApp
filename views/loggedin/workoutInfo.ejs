@@ -14,10 +14,9 @@
       </div>
 <script>
     var dayName = "<%=title%>";
-    console.log(dayName)
                           var data =  <%-JSON.stringify(workout[0].excercises) %>;
-    if(data.week[dayName] == null){
-         data.week[dayName] = "Rest day"
+    if(data.week[dayName].title == null){
+         data.week[dayName].title = "Rest day"
         var obj = `          <div class="workout grayShadowNoOffset">
             <div class="titleH2 info">
           Now it's time to take some well earned rest.
@@ -27,7 +26,7 @@
 ` ; $('.innerWorkout').append(obj)
 
     }
-      $('.titleH1').html(data.week[dayName])
+      $('.titleH1').html(data.week[dayName].title)
       data.workouts[dayName].forEach(element => {
         for (var key in element) {
           var obj = `

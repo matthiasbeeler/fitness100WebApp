@@ -1,12 +1,26 @@
 {
   "week": {
-    "monday": "Pull",
-    "tuesday": "Push",
-    "wednesday": "Legs",
-    "thursday": null,
-    "friday": "Pull",
-    "saturday": "Push",
-    "sunday": "Legs"
+    "monday": {"title":"Pull",
+    "estimatedTime": "55min"
+  },
+    "tuesday": {"title":"Push",
+    "estimatedTime": "53min"
+  },
+    "wednesday":{"title":"Legs",
+    "estimatedTime": "51min"
+  },
+    "thursday": {"title":null,
+    "estimatedTime": ""
+  },
+    "friday": {"title":"Pull",
+    "estimatedTime": "50min"
+  },
+    "saturday": {"title":"Push",
+    "estimatedTime": "40min"
+  },
+    "sunday": {"title":"Legs",
+    "estimatedTime": "25min"
+  }
   },
   "workouts": {
     "monday": [

@@ -267,6 +267,10 @@ select{
 }
 
 
+.hidden{
+  display: none !important;
+  opacity: 0;
+}
 
 .mainSelect{
   display: none;
@@ -353,8 +357,8 @@ margin-right: 0;
 .accountIcon{
   width: 13%;
   position: absolute;
-  top: 2%;
-  right: 4%;
+  top: 6vw;
+  right: 4vw;
   cursor: pointer;
 }
 
@@ -715,6 +719,20 @@ div.fileInput{
   padding: 2%;
 }
 
+.timeEstimate{
+  vertical-align: top;
+  width: 35%;
+  text-align: center;
+  display: inline-block;
+}
+.timeEstimate p{
+  margin-bottom: 1%;
+}
+
+.atelierContainer .infoList{
+  width: 60%;
+  display: inline-block;
+}
 
 .singleAtelierParticipantContainer{
   float: left;
@@ -798,5 +816,10 @@ border-radius: 20px;
 .bottomFixedButton{
   width: 25.8%;
   padding: 1%;
+}
+
+.accountIcon{
+  top: 2%;
+  right: 4%;
 }
 }

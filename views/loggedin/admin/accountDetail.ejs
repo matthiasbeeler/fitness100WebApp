@@ -1,0 +1,146 @@
+<% var title =   participant.firstName+" "+participant.lastName %>
+
+<!DOCTYPE html>
+<html>
+  <%- include('../../modules/head.ejs', {title: title})%>
+
+  <body>
+    <div class="content">
+      <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin/participants`)"})%>
+      <div class="spacing10"></div>
+      <%if(!participant.active){%>
+        <div class="titleH4">Bei der Freischaltung erhält der Nutzer eine Bestätigungs-Email.</div>
+<div class="spacing5"></div>
+        <div class="atelierContainer orangeShadowNoOffset warningContainer">
+            <div class="warningSymbol">
+                <img src="/images/warning.svg" alt="">
+            </div>
+            <div class="title titleH3 titleNoMargin">
+              Nicht freigeschaltet
+            </div>
+          </div>
+          <div class="spacing5"></div>
+            <input type="submit" onclick="$('#activation').val('1');$('form').submit()"
+                class="subtileButton submitButton greenShadowNoOffset whiteButtonBackground button submit" value="Freischalten">
+                <div class="spacing5">
+
+          </div>
+          <div class="infoContainer redInnerShadowNoOffset" style="display: none;">
+            <div class="titleH4 info">
+
+            </div>
+        </div>
+          <div class="spacing5"></div>
+        <%}%>
+      <form>
+        <input type="text" id="firstName" required name="input" onchange="$(this).css('border', '0.5px solid black');"
+        oninvalid="$(this).css('border', '2px solid red');" placeholder="Vorname" value="<%=participant.firstName%>"
+        class="standardInput">
+        <div class="spacing5"></div>
+        <input type="text" id="lastName" required name="input" onchange="$(this).css('border', '0.5px solid black');"
+        oninvalid="$(this).css('border', '2px solid red');" placeholder="Nachname" value="<%=participant.lastName%>"
+        class="standardInput">
+        <div class="spacing5"></div>
+
+        <input type="text" id="workoutCode" required name="input" onchange="$(this).css('border', '0.5px solid black');"
+        oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout code" value="<%=participant.code%>"
+        class="standardInput">
+                <div class="spacing5"></div>
+
+                <select name="activeSelect" class="activeSelect" id="activation">
+                    <option value="1">Freigeschaltet</option>
+                    <option value="0">Blockiert</option>
+                </select>
+               
+             
+
+
+     <div class="spacing5"></div>
+      <div class="titleH3">Registration</div>
+      <div class="textMargin">
+        <%-new Date(participant.registrationTimestamp*1).toLocaleDateString('de-CH')%>, <%-new Date(participant.registrationTimestamp*1).toLocaleTimeString('de-CH')%>
+      </div>
+      <div class="spacing5"></div>
+
+      <div class="spacing5"></div>
+      <input type="submit" class="submitButton bottomFixedButton button submit" value="Speichern">
+
+      </form>
+    </div>
+    <%- include('../../modules/footer.ejs')%>
+
+  </body>
+</html>
+
+<script>
+   
+    function showClassSelect() {
+      $('.classButton').attr('disabled', true)
+      document.querySelector('.classButton').blur()
+      $('.classSelect').css('display', "block");
+      $('.classSelect .inner').css('bottom', '0%')
+    }
+    function hideClassSelect() {
+      $('.classButton').attr('disabled', false)
+      $('.classSelect .inner').css('bottom', "-20%")
+      $('.classSelect').css('display', "none")
+    }
+$('.activeSelect').val(<%=participant.active%>);
+
+$("form").submit(function (e) {
+        e.preventDefault();
+        $('.errorMessage').hide()
+        $(".submit").val("Loading...")
+        $('.submit').prop('disabled', true);
+        try {
+            $.ajax({
+                url: '/admin/updateAccount',
+                type: 'POST',
+                cache: false,
+                data: {
+                    "firstName": $('#firstName').val(),
+                    "lastName": $('#lastName').val(),
+                    "code": $('#workoutCode').val(),
+                    "activation": $('#activation').val(),
+                    "id": "<%=participant.id%>"
+                },
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function (data, status, xhr) {
+                    if (data) {
+                        if (data.success == true) {
+                            $(".submit").addClass(`successButton`)
+                            $(".submit").val("Success")
+                            setTimeout(() => {
+                                window.location = "/admin/accounts"
+                            }, 1000)
+                        }
+                        if (data.success == false) {
+                            $('.infoContainer').show()
+                            $('.infoContainer .info').html(data.message)
+                            $(".submit").val("Save")
+                            $('.submit').prop('disabled', false);
+                        }
+                    }
+
+                },
+                error: function (jqXHR, textStatus, err) {
+                    $('.infoContainer').show()
+                    $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+
+                    $(".submit").val("Login")
+                    $('.submit').prop('disabled', false);
+                }
+            });
+
+
+        } catch (error) {
+            $('.infoContainer').show()
+            $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+            $(".submit").val("Login")
+            $('.submit').prop('disabled', false);
+        }
+    })
+</script>

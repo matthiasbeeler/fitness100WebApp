@@ -1,4 +1,4 @@
-<% var title =   "Teilnehmerverwaltung" %>
+<% var title =   "Accounts" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,8 +12,12 @@
       oninvalid="$(this).css('border', '2px solid red');" placeholder="Name"
       class="standardInput" onkeyup="search()">
       <div class="spacing5"></div>
+      <input type="text" id="emailInput" required name="input" onchange="$(this).css('border', '0.5px solid black');"
+      oninvalid="$(this).css('border', '2px solid red');" placeholder="Email"
+      class="standardInput" onkeyup="emailSearch()">
+      <div class="spacing5"></div>
       <% for(var i = 0; i < participants.length; i++) { %>
-        <div class="atelierContainer participantContainer <%if(participants[i].active == 0) { %> orangeShadowNoOffset <%}else{ %>grayShadowNoOffset<%}%> participant<%=participants[i].id%>" onclick="redirect('/admin/participants/<%=participants[i].id%>')">
+        <div class="atelierContainer participantContainer <%if(participants[i].active == 0) { %> orangeShadowNoOffset <%}else{ %>grayShadowNoOffset<%}%> participant<%=participants[i].id%>" onclick="redirect('/admin/accounts/<%=participants[i].id%>')">
             <div class="participantInfo">
     
             <div class="aterlierTitle participantName titleH3 titleNoMargin">
@@ -21,12 +25,11 @@
 
             </div>
             
-    
-              <div class="title titleH4 lightText titleNoMargin">
+              <div class="title titleH4 lightText participantEmail titleNoMargin">
                 <%=participants[i].email%>
               </div>
               <div class="title titleH4 lightText titleNoMargin">
-                Klasse <%=participants[i].class%>
+                Code: <%=participants[i].code%>
             </div>
         </div>
         <img class="arrow" src="/images/arrow.svg" alt="">
@@ -51,6 +54,26 @@
             // Loop through all table rows, and hide those who don't match the search query
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].querySelector(".participantName");
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function emailSearch() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("emailInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".content");
+            tr = table.getElementsByClassName("atelierContainer");
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].querySelector(".participantEmail");
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {

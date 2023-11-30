@@ -10,7 +10,7 @@
           <div class="accountIcon" onclick="redirect(`/user/account/`)">
             <img src="/images/accountIcon.svg" alt="">
           </div>
-          <div class="spacing13"></div>
+          <div class="spacing5"></div>
           <div class="infoContainer redInnerShadowNoOffset" style="display: none;">
             <div class="titleH4 info">
 
@@ -19,9 +19,9 @@
           <% if(data.admin==true){%>
             <% if(inactives==true){%>
 
-              <input type="submit" onclick="redirect('/admin/participants')"
+              <!--<input type="submit" onclick="redirect('/admin/participants')"
                 class="subtileButton submitButton orangeShadowNoOffset button submit" value="Es gibt blockierte Nutzer">
-              <div class="spacing5"></div>
+              <div class="spacing5"></div>-->
               <%}%>
 
                 <div onclick="redirect('/admin')" class="smallSubmitText submitButton submitDiv">
@@ -67,7 +67,9 @@
                           var dayName =  date.toLocaleDateString("ch-EN", { weekday: 'long' }).toLowerCase();
                           var data =  <%-JSON.stringify(workout[0].excercises) %>;
                           days[dayName].forEach(element => {
-                            var title = data.week[element];
+                            var title = data.week[element].title;
+                            var hide;
+                            if(title == null) hide = "hidden";
                             if(title == null) title = "Rest day"
                             var obj = `
                             <div class="titleH4 placeholderColour">
@@ -81,10 +83,14 @@
           </div>
           
           <div class="infoList">
-
-         
-          
           </div>
+        <div class="timeEstimate ${hide}">
+          <p>Estimated time:</p>
+          <div class="aterlierTitle titleH3 titleNoMargin">
+            ${data.week[element].estimatedTime}
+          </div>
+        </div>
+
           <div class="smallSubmitText submitButton submitDiv" onclick="window.location = '/user/${element}'">
            Show more
           </div>

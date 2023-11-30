@@ -91,14 +91,16 @@ exports.login = function (request, response, database, bouncer) {
 exports.signup = function (request, response, database) {
   try {
     //Firstname, email and password
+    console.log(request.body.code)
     if (
-      !request.body.class ||
+      !request.body.code ||
       !request.body.lastName ||
       !request.body.firstName ||
       !request.body.email ||
       !request.body.password
-    )
-      return response.json({ success: false, error: 1 });
+      )return response.json({ success: false, error: 1 });
+    
+   
     var firstName = request.body.firstName;
     var lastName = request.body.lastName;
     var workoutCode = request.body.code;
