@@ -6,10 +6,12 @@
 
   <body>
     <div class="content">
-      <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin/participants`)"})%>
+      <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin/accounts`)"})%>
       <div class="spacing10"></div>
       <%if(!participant.active){%>
         <div class="titleH4">Bei der Freischaltung erhält der Nutzer eine Bestätigungs-Email.</div>
+<div class="spacing5"></div>
+
 <div class="spacing5"></div>
         <div class="atelierContainer orangeShadowNoOffset warningContainer">
             <div class="warningSymbol">
@@ -32,6 +34,12 @@
         </div>
           <div class="spacing5"></div>
         <%}%>
+        <div class="infoContainer redInnerShadowNoOffset" style="display: none;">
+          <div class="titleH4 info">
+        
+          </div>
+        </div>
+        <div class="spacing5"></div>
       <form>
         <input type="text" id="firstName" required name="input" onchange="$(this).css('border', '0.5px solid black');"
         oninvalid="$(this).css('border', '2px solid red');" placeholder="Vorname" value="<%=participant.firstName%>"
@@ -39,6 +47,10 @@
         <div class="spacing5"></div>
         <input type="text" id="lastName" required name="input" onchange="$(this).css('border', '0.5px solid black');"
         oninvalid="$(this).css('border', '2px solid red');" placeholder="Nachname" value="<%=participant.lastName%>"
+        class="standardInput">
+        <div class="spacing5"></div>
+        <input type="text" id="email" required name="input" onchange="$(this).css('border', '0.5px solid black');"
+        oninvalid="$(this).css('border', '2px solid red');" placeholder="Email" value="<%=participant.email%>"
         class="standardInput">
         <div class="spacing5"></div>
 
@@ -100,6 +112,7 @@ $("form").submit(function (e) {
                 data: {
                     "firstName": $('#firstName').val(),
                     "lastName": $('#lastName').val(),
+                    "email": $('#email').val(),
                     "code": $('#workoutCode').val(),
                     "activation": $('#activation').val(),
                     "id": "<%=participant.id%>"

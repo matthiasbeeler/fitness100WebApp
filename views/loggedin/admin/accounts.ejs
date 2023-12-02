@@ -16,6 +16,10 @@
       oninvalid="$(this).css('border', '2px solid red');" placeholder="Email"
       class="standardInput" onkeyup="emailSearch()">
       <div class="spacing5"></div>
+      <input type="text" id="codeInput" required name="input" onchange="$(this).css('border', '0.5px solid black');"
+      oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout code"
+      class="standardInput" onkeyup="codeSearch()">
+      <div class="spacing5"></div>
       <% for(var i = 0; i < participants.length; i++) { %>
         <div class="atelierContainer participantContainer <%if(participants[i].active == 0) { %> orangeShadowNoOffset <%}else{ %>grayShadowNoOffset<%}%> participant<%=participants[i].id%>" onclick="redirect('/admin/accounts/<%=participants[i].id%>')">
             <div class="participantInfo">
@@ -28,7 +32,7 @@
               <div class="title titleH4 lightText participantEmail titleNoMargin">
                 <%=participants[i].email%>
               </div>
-              <div class="title titleH4 lightText titleNoMargin">
+              <div class="title titleH4 lightText workoutCode titleNoMargin">
                 Code: <%=participants[i].code%>
             </div>
         </div>
@@ -74,6 +78,25 @@
             // Loop through all table rows, and hide those who don't match the search query
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].querySelector(".participantEmail");
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        function codeSearch() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("codeInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".content");
+            tr = table.getElementsByClassName("atelierContainer");
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].querySelector(".workoutCode");
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
