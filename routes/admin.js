@@ -4,7 +4,9 @@ INSERT INTO fitness100.workouts (id, workoutCode, `timestamp`)
 
 
     */
+   
 	var express = require("express");
+	var moment = require("moment");
 	var router = express.Router();
 	const jwt = require("jsonwebtoken");
 	const { database } = require("../services/database");
@@ -41,6 +43,7 @@ const { updateAccount } = require("../javascripts/admin/accounts");
 	
 	});
 
+	//account admin
 	router.get("/accounts", (req, res) => {
 		database.query(
 		  "SELECT * FROM accounts WHERE id NOT LIKE ? ORDER by active ASC",
@@ -65,5 +68,61 @@ const { updateAccount } = require("../javascripts/admin/accounts");
 	  router.post("/updateAccount", (req, res) => {
 		updateAccount(req, res, database);
 	  });
+
+
+	  //workout plan maintenance and overview
+
+	  router.get("/workoutPlans", (req, res) => {
+		database.query(
+		  "SELECT * FROM workouts  ORDER by timestamp ASC",
+		  function (err, results, fields) {
+			res.render("loggedin/admin/workoutPlans", { plans: results });
+		  }
+		);
+	  });
+
+
+	  router.get("/workoutPlans/:id", function (req, res, next) {
+		database.query(
+		  `SELECT * FROM workouts where id = ?;`,[req.params.id],
+		  function (err, results, fields) {
+			if(!results.length > 0) return res.redirect('/admin');
+			var workout = results[0];
+			console.log(err)
+			if(err)  ateliers = [];
+			database.query(
+			  `SELECT * FROM accounts where code = ?;`,[workout.workoutCode],
+			  function (err, results, fields) {
+				let account;
+				if(results.length > 0)  account = results[0];
+				workout.timestamp = moment.unix(workout.timestamp).format("HH:mm, DD.MM.YYYY")
+		res.render("loggedin/admin/workoutSingle", {
+		  workout: workout,
+		  account: account
+		});
+	  });
+	});
+});
+
+
+router.get("/images", function (req, res, next) {
+	fs.readdir(process.cwd()+'/public/workoutImages/', (err, files) => {
+		console.log(files)
+		var fileArray = []
+		files.forEach(element => {
+			fileArray.push(element)
+		});
+		var filesArray = JSON.stringify(fileArray)
+		console.log(filesArray)
+	  res.render("loggedin/admin/images", {
+		files: JSON.parse(filesArray),
+	  });
+	});
+});
+
+router.get("/newWorkoutPlan", function (req, res, next) {
+	  res.render("loggedin/admin/newWorkoutPlan");
+});
+
 
 	module.exports = router;

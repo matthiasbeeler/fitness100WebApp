@@ -1,0 +1,36 @@
+<% var title="Bilder" %>
+
+  <!DOCTYPE html>
+  <html>
+  <%- include('../../modules/head.ejs', {title: title})%>
+
+    <body>
+      <div class="content">
+        <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin`)"
+          })%>
+          <div class="spacing13"></div>
+          <div class=" submitButton submitDiv "  onclick="showLess('${element}')">
+            Neues Bild hochladen
+           </div>
+           <div class="spacing5"></div>
+          <div class="imageMainContainer">
+
+          </div>
+          <script defer>
+            var images = <%-JSON.stringify(files)%>;
+            var imageObj = "";
+          images.forEach(image =>{
+            
+             imageObj = imageObj + `<div class="imageContainer"><img src="/workoutImages/${image}" alt=""></div>`;
+          })
+          console.log(imageObj)
+          $('.imageMainContainer').append(imageObj);
+
+        </script>
+         
+      </div>
+      <%- include('../../modules/footer.ejs')%>
+
+    </body>
+
+  </html>

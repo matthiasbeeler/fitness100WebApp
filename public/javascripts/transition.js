@@ -10,6 +10,7 @@ function redirect(destination) {
   }, 100);
 }
 
+
 //date input
 var el = document.getElementById("dateField");
 

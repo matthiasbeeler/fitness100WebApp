@@ -1,0 +1,172 @@
+<% var title="" %>
+
+  <!DOCTYPE html>
+  <html>
+  <%- include('../../modules/head.ejs', {title: title})%>
+
+    <body>
+      <div class="content">
+        <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin`)"})%>
+        <div class="spacing5"></div>
+          <div class="infoContainer redInnerShadowNoOffset" style="display: none;">
+            <div class="titleH4 info">
+
+            </div>
+          </div>
+          <div class="aterlierTitle titleH3 ">
+            Code: <%=workout.workoutCode %>
+          </div>
+          <br>
+          <div class="aterlierTitle titleH4 ">
+            Erstellungszeit: <%=workout.timestamp %>
+          </div>
+          <br>
+          <div class="aterlierTitle titleH4 ">
+            Erstellt von: <%=workout.createdBy %>
+          </div>
+          <br>
+          <a href="/admin/accounts/<%=account.id%>" target="_blank">
+          <div class="aterlierTitle titleH4 ">
+            Momentan benutzt von:  <%=account.lastName %>, <%=account.firstName %>
+          </div>
+        </a>
+        <br>
+                  <div class="workoutContent">
+                   <div class="workoutOverlay">
+                    <div class="backButton" onclick="$(this).parent().hide()">
+                      <img class="svgWhite" src="/images/back.svg" alt="">
+                  </div>
+                  <div class="titleH1 title actualTitle">
+                    
+                  </div>
+                  <div class="spacing5"></div>
+                  <div class="innerOverlay">
+
+                  </div>
+                   </div>
+                    <% function getDayName(dateStr, locale) { var date=new Date(dateStr); return
+                      date.toLocaleDateString(locale, { weekday: 'long' }); } %>
+
+
+                        <script>
+                          function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+                          var days = {
+                            "monday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+                            "tuesday": ["tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday"],
+                            "wednesday": ["wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday"],
+                            "thursday": ["thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday"],
+                            "friday": ["friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday"],
+                            "saturday": ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday"],
+                            "sunday": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+                          }
+
+                          var date = new Date();
+                          var dayName =  date.toLocaleDateString("ch-EN", { weekday: 'long' }).toLowerCase();
+                          var data =  <%-JSON.stringify(workout.excercises) %>;
+                          days[dayName].forEach(element => {
+                            var title = data.week[element].title;
+                            var hide;
+                            if(title == null) hide = "hidden";
+                            if(title == null) title = "Rest day"
+                            var obj = `
+                            <div class="titleH4 placeholderColour">
+                              ${capitalize(element)}
+                    </div>
+                    <div class="spacing5"></div>
+
+                            <div class="atelierContainer ${element}  grayShadowNoOffset">
+          <div class="aterlierTitle titleH3 titleNoMargin">
+            ${title}
+          </div>
+          
+          <div class="infoList">
+          </div>
+        <div class="timeEstimate ${hide}">
+          <p>Estimated time:</p>
+          <div class="aterlierTitle titleH3 titleNoMargin">
+            ${data.week[element].estimatedTime}
+          </div>
+        </div>
+
+          <div class="smallSubmitText submitButton submitDiv showMore" onclick="showMore('${element}')">
+           Show more
+          </div>
+<div class="expandWorkout" style="display:none;">
+
+  </div>
+  <div class="smallSubmitText submitButton submitDiv showLess"  style="display:none;" onclick="showLess('${element}')">
+           Show less
+          </div>
+        </div>
+        <div class="spacing10"></div>
+        `
+        $('.workoutContent').append(obj)
+        var workout = ""
+        data.workouts[element].forEach(element => {
+          for (var key in element) {
+          workout = workout + `<li>${key}  -  ${element[key].sets}x${element[key].repetitions} </li>`
+        }
+        });
+        $('.titleH4.placeholderColour').first().html('Today')
+        if(title == "Rest day") $('.'+element+' .submitButton').hide()
+        $('.atelierContainer.'+element+' .infoList').append(workout)
+                          });
+                        </script>
+                        
+
+                  </div>
+      </div>
+      <%- include('../../modules/footer.ejs')%>
+    </body>
+  </html>
+
+  <script>
+    function showMore(dayName){
+    if(data.week[dayName].title == null){
+         data.week[dayName].title = "Rest day"
+        var obj = `          <div class="workout grayShadowNoOffset">
+            <div class="titleH2 info">
+          Now it's time to take some well earned rest.
+</div>
+        </div>
+
+` ; $('.innerWorkout').append(obj)
+
+    }
+      $('.titleH1').html(data.week[dayName].title)
+      data.workouts[dayName].forEach(element => {
+        for (var key in element) {
+          var obj = `
+          <div class="workout ${key}">
+        <div class="titleH2 info">
+          ${key}
+</div>
+<img src="${element[key].image}" alt="" loading="lazy">
+<div class="titleH4 lightText">
+                              ${element[key].description}
+                    </div>
+                    <div class="titleH4">
+                              Do ${element[key].sets}x${element[key].repetitions} repetitions
+                    </div>
+                  </div>
+
+                    <div class="spacing5"></div>
+        `;
+        }
+        
+  $('.'+dayName+' .expandWorkout').append(obj)
+  $('.'+dayName+' .expandWorkout').show()
+  $('.'+dayName+' .showMore').hide()
+  $('.'+dayName+' .showLess').show()
+      });
+    }
+    function showLess(dayName){
+      $('.'+dayName+' .expandWorkout').html("")
+
+  $('.'+dayName+' .expandWorkout').hide()
+  $('.'+dayName+' .showMore').show()
+  $('.'+dayName+' .showLess').hide()
+    }
+  </script>
