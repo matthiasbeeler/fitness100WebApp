@@ -18,7 +18,6 @@ bouncer.blocked = function (req, res, next, remaining)
 router.all(["/", "/signup"], function (req, res, next) {
   try {
   if(req.cookies.FitnessAuth){
-    console.log(jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).loggedin)
     if(jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).loggedin) return res.redirect('/user')
   }
   if(!req.cookies.FitnessAuth){

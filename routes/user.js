@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const jwt = require("jsonwebtoken");
-const { updateImage } = require("../javascripts/updateImage");
+const { updateImageProfile } = require("../javascripts/updateImage");
 const { database } = require("../services/database");
 const { validate } = require("uuid");
 const fs = require("fs");
@@ -114,7 +114,7 @@ router.get("/account/profileImage", function (req, res, next) {
 });
 
 router.post("/account/profileImage", function (req, res) {
-  updateImage(req, res, database);
+  updateImageProfile(req, res, database);
 });
 
 router.get("/account/emailUpdate", function (req, res, next) {
@@ -198,4 +198,3 @@ router.get("/:day", function (req, res, next) {
 module.exports = router;
 
 
-console.log(Math.random().toString(16).substr(2, 4)+"-"+Math.random().toString(16).substr(2, 4)+"-"+Math.random().toString(16).substr(2, 4))

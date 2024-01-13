@@ -15,7 +15,7 @@
 <script>
     var dayName = "<%=title%>";
                           var data =  <%-JSON.stringify(workout[0].excercises) %>;
-    if(data.week[dayName].title == null){
+    if(data.week[dayName].title == ""){
          data.week[dayName].title = "Rest day"
         var obj = `          <div class="workout grayShadowNoOffset">
             <div class="titleH2 info">
@@ -69,109 +69,5 @@
         $('.overlay').hide();
         $('.backButton').attr('onclick', backAction)
     }
-    function createEntry(id) {
-      $('.errorMessage').hide()
-          $(".submit"+id).val("Loading...")
-          $('.submit'+id).prop('disabled', true);
-          try {
-              $.ajax({
-                  url: '/user/createEntry',
-                  type: 'POST',
-                  
-                 cache: false,
-                 data: {
-                     "atelierId": id
-                  },
-                  xhrFields: {
-                      withCredentials: true
-                  },
-                  crossDomain: true,
-                  success: function (data, status, xhr) {
-                      if (data) {
-                          if (data.success == true) {
-                              $(".submit"+id).hide()
-                              $('.signedUpParttakers'+id).html("Eingetragene Teilnehmer: "+data.participants);
-                              $(".signedUp"+id).show()
-                          }
-                          if (data.success == false) {
-                            console.log(data)
-                              $('.infoContainer').show()
-                              $('.infoContainer .info').html(data.message)
-                              $(".submit"+id).val("Eintragen")
-                              $('.submit'+id).prop('disabled', false);
-                          }
-                      }
-  
-                  },
-                  error: function (jqXHR, textStatus, err) {
-                      $('.infoContainer').show()
-                      $('.infoContainer .info').html("An error occerd whilst communication with our server.")
-  
-                      $(".submit"+id).val("Eintragen")
-                              $('.submit'+id).prop('disabled', false);
-                  }
-              });
-  
-  
-          } catch (error) {
-              console.log(error)
-              $('.infoContainer').show()
-              $('.infoContainer .info').html("An error occerd whilst communication with our server.")
-              $(".submit"+id).val("Eintragen")
-                              $('.submit'+id).prop('disabled', false);
-          }
-    }
-    function removeEntry(id) {
-      $('.errorMessage').hide()
-          $(".removeEntry"+id).val("Loading...")
-          $('.removeEntry'+id).prop('disabled', true);
-          try {
-              $.ajax({
-                  url: '/user/removeEntry',
-                  type: 'POST',
-                  
-                 cache: false,
-                 data: {
-                     "atelierId": id
-                  },
-                  xhrFields: {
-                      withCredentials: true
-                  },
-                  crossDomain: true,
-                  success: function (data, status, xhr) {
-                      if (data) {
-                          if (data.success == true) {
-                                hideOverlay();
-                              $(".submit"+id).show()
-                              $('.signedUpParttakers'+id).html("Eingetragene Teilnehmer: "+data.participants);
-                              $(".alreadySignedUp, .removeEntryButton").hide()
-                          }
-                          if (data.success == false) {
-                            console.log(data)
-                              $('.infoContainer').show()
-                              $('.infoContainer .info').html(data.message)
-                              $(".removeEntry"+id).val("Ja, abmelden")
-                              $('.removeEntry'+id).prop('disabled', false);
-                          }
-                      }
-  
-                  },
-                  error: function (jqXHR, textStatus, err) {
-                      $('.infoContainer').show()
-                      $('.infoContainer .info').html("An error occerd whilst communication with our server.")
-  
-                      $(".removeEntry"+id).val("Ja, abmelden")
-                              $('.removeEntry'+id).prop('disabled', false);
-                  }
-              });
-  
-  
-          } catch (error) {
-              console.log(error)
-              $('.infoContainer').show()
-              $('.infoContainer .info').html("An error occerd whilst communication with our server.")
-              $(".removeEntry"+id).val("Ja, abmelden")
-                              $('.removeEntry'+id).prop('disabled', false);
-          }
-    }
+   
   </script>

@@ -69,8 +69,8 @@
                           days[dayName].forEach(element => {
                             var title = data.week[element].title;
                             var hide;
-                            if(title == null) hide = "hidden";
-                            if(title == null) title = "Rest day"
+                            if(title == "") hide = "hidden";
+                            if(title == "") title = "Rest day"
                             var obj = `
                             <div class="titleH4 placeholderColour">
                               ${capitalize(element)}

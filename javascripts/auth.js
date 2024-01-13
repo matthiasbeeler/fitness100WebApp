@@ -106,7 +106,6 @@ exports.signup = function (request, response, database) {
     var workoutCode = request.body.code;
     var password = request.body.password;
     var email = request.body.email;
-    console.log(request.body);
     if (
       validator.isEmpty(firstName) ||
       validator.isEmpty(email) ||

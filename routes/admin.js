@@ -13,6 +13,8 @@ INSERT INTO fitness100.workouts (id, workoutCode, `timestamp`)
 	const { validate } = require("uuid");
 	const fs = require("fs");
 const { updateAccount } = require("../javascripts/admin/accounts");
+const { uploadWorkoutImage } = require("../javascripts/updateImage");
+const { createNewWorkout } = require("../javascripts/admin/newWorkout");
 	
 	router.all("*", function (req, res, next) {
 	  try {
@@ -123,6 +125,18 @@ router.get("/images", function (req, res, next) {
 router.get("/newWorkoutPlan", function (req, res, next) {
 	  res.render("loggedin/admin/newWorkoutPlan");
 });
+
+router.post("/workoutImageUpload", function (req, res, next) {
+
+	uploadWorkoutImage(req, res, database)
+});
+
+
+router.post("/createNewWorkout", function (req, res, next) {
+	console.log("hi")
+	createNewWorkout(req, res, database)
+});
+
 
 
 	module.exports = router;

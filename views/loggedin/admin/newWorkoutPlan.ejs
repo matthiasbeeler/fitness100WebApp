@@ -9,6 +9,7 @@
                 <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false,
                     backLink: "redirect(`/admin`)" })%>
                     <div class="spacing13"></div>
+                    <div class="titleH2" style="display: none;" id="workoutCode"></div>
                     <form>
                         <input type="text" id="title" required name="title"
                             onchange="$(this).css('border', '0.5px solid black');"
@@ -193,7 +194,7 @@
         Übung hinzufügen
     </div>
 </div>
-                        <div onclick=""
+                        <div onclick="$('form').submit()"
             class="smallSubmitText submitButton submitDiv bottomFixedButton">
             Speichern
           </div>
@@ -243,73 +244,15 @@
     },
     "workouts": {
         
-        "monday": [
-            
-            {
-                "Hammer curl": {
-                    "sets": 4,
-                    "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
-                    "description": "Curl like a hammer",
-                    "repetitions": "8"
-                }
-            }
-        ],
+        "monday": [],
        
-        "tuesday": [
-            
-            {
-                "Hammer curl": {
-                    "sets": 4,
-                    "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
-                    "description": "Curl like a hammer",
-                    "repetitions": "8"
-                }
-            }
-        ],
+        "tuesday": [],
         
-        "wednesday": [
-            {
-                "Hammer curl": {
-                    "sets": 4,
-                    "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
-                    "description": "Curl like a hammer",
-                    "repetitions": "8"
-                }
-            }
-        ],
+        "wednesday": [],
         "thursday": [],
-        "friday": [
-            {
-                "Hammer curl": {
-                    "sets": 4,
-                    "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
-                    "description": "Curl like a hammer",
-                    "repetitions": "8"
-                }
-            }
-        ],
-        "saturday": [
-            
-            {
-                "Hammer curl": {
-                    "sets": 4,
-                    "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
-                    "description": "Curl like a hammer",
-                    "repetitions": "8"
-                }
-            }
-        ],
-        "sunday": [
-            
-            {
-                "Hammer curl": {
-                    "sets": 4,
-                    "image": "https://gymjunkies.com/wp-content/uploads/2016/12/shutterstock_373995424-1.jpg",
-                    "description": "Curl like a hammer",
-                    "repetitions": "8"
-                }
-            }
-        ],
+        "friday": [],
+        "saturday": [],
+        "sunday": [],
         
     }
 }
@@ -345,7 +288,7 @@ function renameFile(originalFile, newName) {
                         "sets": $(exercise).children("#sets").val(),
                         "description": $(exercise).children(".description").val(),
                         "repetitions": $(exercise).children("#reps").val(),
-                        "image": $(exercise).children(".fileInput").children("#fileInput")[0].files[0].name,
+                        "image": $(exercise).children("#imageId").val(),
 
                     }
                     jsonCode.workouts[day].push(insert)
@@ -357,6 +300,8 @@ function renameFile(originalFile, newName) {
         }
 
         function addExercise(day) {
+            var id = uuidv4();
+            console.log(id)
             var obj = `
             <div class="exercise">
             <div class="seperator"></div>
@@ -366,16 +311,20 @@ function renameFile(originalFile, newName) {
                                 onchange="$(this).css('border', '0.5px solid black');"
                                 oninvalid="$(this).css('border', '2px solid red');" placeholder="Übungstitel"
                                 class="standardInput" onkeyup="">
+                                <input type="text" id="imageId" required name="exerciseTitle"
+                                onchange="$(this).css('border', '0.5px solid black');"
+                                oninvalid="$(this).css('border', '2px solid red');" placeholder="Übungstitel"
+                                class="standardInput" style="display: none;" onkeyup="" value="${id}">
 
                                 <div class="spacing5"></div>
                                 <div class="fileInput standardInput submit grayShadowNoOffset" onclick="document.querySelector('#fileInput').click();">
-        <img src="" alt="" class="filePreview" style="display: none;">
+        <img src="" alt="" class="filePreview ${id}" style="display: none;">
 
         <div class="placeholderText">
             Click to add new image
         </div>
 
-        <input type="file" onchange="displayImage(this);renameFile($(this)[0].files[0], uuidv4())" accept="image/*" id="fileInput" novalidate
+        <input type="file" onchange="displayImage(this, '${id}');renameFile($(this)[0].files[0], uuidv4())" accept="image/*" id="fileInput" novalidate
             name="fileInput" required style="display: none; color: transparent; border: none;">
         
     </div>
@@ -407,20 +356,155 @@ function renameFile(originalFile, newName) {
     $('.'+day+" .exercisesContainer").append(obj)
     }
 
-    function displayImage(input) {
+    function displayImage(input, id) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('.filePreview').attr('src', e.target.result);
-                $('.filePreview').show();
-                $('.fileInput .placeholderText').html('Click to change');
-                $('.submitButton').removeClass('subtileButton')
-                $('.submitButton').removeClass('grayInnerShadowNoOffset')
+
+                $('.'+id).attr('src', e.target.result);
+                $('.'+id).parent().children('.filePreview').show();
+                $('.'+id).parent().children('.filePreview .placeholderText').html('Click to change');
                 
             }
 
             reader.readAsDataURL(input.files[0]);
         }
+        imageUpload(id, input)
     }
+
+      $("form").submit(function(e) {
+        e.preventDefault();
+        createJson()
+       try {
+           
+           $.ajax({
+               url: '/admin/createNewWorkout',
+               type: 'POST',
+               async: false,
+               cache: false,
+               data: {
+                "workoutTitle": $('#title').val(),
+                "workoutJson": JSON.stringify(jsonCode),
+               },
+               crossDomain: true,
+               success: function (data, status, xhr) {
+                   if (data) {
+
+                       if (data.success == true) {
+                           $(".submit").val("Success")
+                           $(".submit").addClass(`successButton`)
+                           $('form').hide();
+                           console.log(data)
+                           $('#workoutCode').show();
+                           $('#workoutCode').html(data.workoutCode)
+                       }
+                       if (data.success == false) {
+                           $(".submit").val("Profilbild updaten")
+                           $('.submit').prop('disabled', false);
+                           $('.infoContainer').show()
+                           $('.infoContainer .info').html(data.message)
+                           $(".content").css("opacity", "1");
+
+                           
+                       }
+                   }
+
+               },
+               error: function (jqXHR, textStatus, err) {
+                   $(".content").css("opacity", "1");
+
+                   $('.fileInput').show()
+                   $('.infoContainer').show()
+                   $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+
+                   $(".submit").val("Profilbild updaten")
+                   $('.submit').prop('disabled', false);
+                   console.log(err)
+               }
+           });
+
+
+       } catch (error) {
+           console.log(error)
+           $(".content").css("opacity", "1");
+           $('.infoContainer').show()
+           $('.fileInput').show()
+           $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+           $(".submit").val("Profilbild updaten")
+           $('.submit').prop('disabled', false);
+       }
+   })
+
+
+   function imageUpload(id, input){
+    setTimeout(() => {
+        var formData = new FormData();
+           formData.append('changeElement', "image")
+           formData.append('image', $("."+id).parent().children('#fileInput')[0].files[0]);
+           formData.append('id', id);
+
+       try {
+
+           $.ajax({
+               url: '/admin/workoutImageUpload/',
+               type: 'POST',
+               processData: false,
+               contentType: false,
+               async: false,
+               cache: false,
+               data: formData,
+               crossDomain: true,
+               success: function (data, status, xhr) {
+                   if (data) {
+
+                       if (data.success == true) {
+                           $(".submit").val("Success")
+                           $(".submit").addClass(`successButton`)
+                          console.log("imageupload ", id, " successful")
+                       }
+                       if (data.success == false) {
+                        
+                           $(".submit").val("Profilbild updaten")
+                           $('.submit').prop('disabled', false);
+                           $('.infoContainer').show()
+                           $('.infoContainer .info').html(data.message)
+                           $(".content").css("opacity", "1");
+                           console.error("imageupload ", id, " errored")
+
+                           
+                       }
+                   }
+
+               },
+               error: function (jqXHR, textStatus, err) {
+                   $(".content").css("opacity", "1");
+
+                   $('.fileInput').show()
+                   $('.infoContainer').show()
+                   $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+
+                   $(".submit").val("Profilbild updaten")
+                   $('.submit').prop('disabled', false);
+                   console.error("imageupload ", id, " errored")
+
+               }
+           });
+
+
+       } catch (error) {
+           console.log(error)
+           $(".content").css("opacity", "1");
+           $('.infoContainer').show()
+           $('.fileInput').show()
+           $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+           $(".submit").val("Profilbild updaten")
+           $('.submit').prop('disabled', false);
+           console.error("imageupload ", id, " errored")
+
+       }
+
+        
+    }, 1000);
+   }
 </script>

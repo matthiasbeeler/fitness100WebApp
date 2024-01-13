@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-
-exports.updateImage = function (request, response, database) {
+const sharp = require("sharp");
+exports.updateImageProfile = function (request, response, database) {
     try {
     const sharp = require('sharp');
     var jwtData = jwt.verify(request.cookies.FitnessAuth, process.env.jwtSecret);
@@ -30,6 +30,35 @@ exports.updateImage = function (request, response, database) {
        
       })
 
+        
+    } catch (error) {
+        console.log(error)
+        return response.json({ success: false, message: "An error occured" }); 
+    }
+  };
+  
+
+  exports.uploadWorkoutImage = function (request, response, database) {
+    try {
+    var jwtData = jwt.verify(request.cookies.FitnessAuth, process.env.jwtSecret);
+    var id = request.body.id;
+    var image = request.files.image;
+    if(image.size > 5597152) return response.json({ success: false, message: "Your images size is too big" }); 
+  sharp(image.data)
+   .rotate()
+    .webp({ quality:50 })
+    .toFile(process.cwd() + '/public/workoutImages/' + id+".webp", (err, info) => { console.log(err)
+      if (!err) return response.json({ success: true });
+      if (err) console.log(err);
+              if (err)
+                return response.json({
+                  success: false,
+                  error: 4,
+                  message: "An error occured.",
+                });
+    });
+
+    
         
     } catch (error) {
         console.log(error)
