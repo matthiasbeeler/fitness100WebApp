@@ -9,7 +9,9 @@
                 <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false,
                     backLink: "redirect(`/admin`)" })%>
                     <div class="spacing13"></div>
+                    <center>
                     <div class="titleH2" style="display: none;" id="workoutCode"></div>
+                    </center>
                     <form>
                         <input type="text" id="title" required name="title"
                             onchange="$(this).css('border', '0.5px solid black');"
@@ -367,7 +369,6 @@ function renameFile(originalFile, newName) {
                 $('.'+id).attr('src', e.target.result);
                 $('.'+id).parent().children('.filePreview').show();
                 $('.'+id).parent().children('.filePreview .placeholderText').html('Click to change');
-                
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -401,6 +402,10 @@ function renameFile(originalFile, newName) {
                            console.log(data)
                            $('#workoutCode').show();
                            $('#workoutCode').html(data.workoutCode)
+                           $('#workoutCode').attr("onclick", navigator.clipboard.writeText(data.workoutCode));
+
+                
+
                        }
                        if (data.success == false) {
                            $(".submit").val("Profilbild updaten")
