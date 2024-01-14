@@ -402,7 +402,7 @@ function renameFile(originalFile, newName) {
                            console.log(data)
                            $('#workoutCode').show();
                            $('#workoutCode').html(data.workoutCode)
-                           $('#workoutCode').attr("onclick", "navigator.clipboard.writeText("+data.workoutCode+"); $(this).html(''+$(this).html()+' - copied to clipboard')");
+                           $('#workoutCode').attr("onclick", "navigator.clipboard.writeText('"+data.workoutCode+"'); $(this).html(''+$(this).html()+' - copied to clipboard')");
 
                 
 
