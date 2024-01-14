@@ -97,7 +97,7 @@ const { createNewWorkout } = require("../javascripts/admin/newWorkout");
 			  function (err, results, fields) {
 				let account;
 				if(results.length > 0)  account = results[0];
-				workout.timestamp = moment.unix(workout.timestamp).format("HH:mm, DD.MM.YYYY")
+				workout.timestamp = moment.unix(workout.timestamp*0.001).format("HH:mm, DD.MM.YYYY")
 		res.render("loggedin/admin/workoutSingle", {
 		  workout: workout,
 		  account: account
@@ -109,13 +109,11 @@ const { createNewWorkout } = require("../javascripts/admin/newWorkout");
 
 router.get("/images", function (req, res, next) {
 	fs.readdir(process.cwd()+'/public/workoutImages/', (err, files) => {
-		console.log(files)
 		var fileArray = []
 		files.forEach(element => {
 			fileArray.push(element)
 		});
 		var filesArray = JSON.stringify(fileArray)
-		console.log(filesArray)
 	  res.render("loggedin/admin/images", {
 		files: JSON.parse(filesArray),
 	  });
@@ -133,7 +131,6 @@ router.post("/workoutImageUpload", function (req, res, next) {
 
 
 router.post("/createNewWorkout", function (req, res, next) {
-	console.log("hi")
 	createNewWorkout(req, res, database)
 });
 

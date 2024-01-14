@@ -60,7 +60,7 @@
                                 <input type="text" class="duration" required name="duration"
                                     onchange="$(this).css('border', '0.5px solid black');"
                                     oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout Dauer"
-                                    class="standardInput" onkeyup="">
+                                    class="standardInput" onkeyup="" required>
                             <div class="spacing5"></div>
                             <div class="exercisesContainer">
 
@@ -85,7 +85,7 @@
         <input type="text" class="duration" required name="duration"
             onchange="$(this).css('border', '0.5px solid black');"
             oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout Dauer"
-            class="standardInput" onkeyup="">
+            class="standardInput" onkeyup="" required>
     <div class="spacing5"></div>
     <div class="exercisesContainer">
 
@@ -110,7 +110,7 @@
         <input type="text" class="duration" required name="duration"
             onchange="$(this).css('border', '0.5px solid black');"
             oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout Dauer"
-            class="standardInput" onkeyup="">
+            class="standardInput" onkeyup="" required>
     <div class="spacing5"></div>
     <div class="exercisesContainer">
 
@@ -135,7 +135,7 @@
         <input type="text" class="duration" required name="duration"
             onchange="$(this).css('border', '0.5px solid black');"
             oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout Dauer"
-            class="standardInput" onkeyup="">
+            class="standardInput" onkeyup="" required>
     <div class="spacing5"></div>
     <div class="exercisesContainer">
 
@@ -159,7 +159,7 @@
         <input type="text" class="duration" required name="duration"
             onchange="$(this).css('border', '0.5px solid black');"
             oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout Dauer"
-            class="standardInput" onkeyup="">
+            class="standardInput" onkeyup="" required>
     <div class="spacing5"></div>
     <div class="exercisesContainer">
 
@@ -184,7 +184,7 @@
         <input type="text" class="duration" required name="duration"
             onchange="$(this).css('border', '0.5px solid black');"
             oninvalid="$(this).css('border', '2px solid red');" placeholder="Workout Dauer"
-            class="standardInput" onkeyup="">
+            class="standardInput" onkeyup="" required>
     <div class="spacing5"></div>
     <div class="exercisesContainer">
 
@@ -262,7 +262,6 @@ function uuidv4() {
   );
 }
 
-console.log();
 function renameFile(originalFile, newName) {
     Object.defineProperty(originalFile, 'name', {
   writable: true,
@@ -274,9 +273,12 @@ function renameFile(originalFile, newName) {
             var weekdays = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
             weekdays.forEach(day => {
                 jsonCode.week[day].title = $(`#${day}Title`).val();
-                jsonCode.week.monday.estimatedTime = $(`.${day} .duration`).val();
+                jsonCode.week[day].estimatedTime = $(`.${day} .duration`).val();
+
+                
             });
             weekdays.forEach(day => {
+                if(stop == 1) return;
                 var exercises = $(`.${day} .exercisesContainer`).children('.exercise');
                 if(exercises.length <= 0) return;
                 for (let index = 0; index < exercises.length; index++) {
@@ -375,6 +377,7 @@ function renameFile(originalFile, newName) {
 
       $("form").submit(function(e) {
         e.preventDefault();
+        if($('#title').val() == "") return;
         createJson()
        try {
            

@@ -25,11 +25,18 @@
             Erstellt von: <%=workout.createdBy %>
           </div>
           <br>
+          <% if(account){%>
           <a href="/admin/accounts/<%=account.id%>" target="_blank">
           <div class="aterlierTitle titleH4 ">
             Momentan benutzt von:  <%=account.lastName %>, <%=account.firstName %>
           </div>
         </a>
+        <%}else{%>
+          <div class="aterlierTitle titleH4 ">
+            Momentan nicht in Benutzung
+          </div>
+          <%}%>
+
         <br>
                   <div class="workoutContent">
                    <div class="workoutOverlay">
@@ -68,8 +75,8 @@
                           days[dayName].forEach(element => {
                             var title = data.week[element].title;
                             var hide;
-                            if(title == null) hide = "hidden";
-                            if(title == null) title = "Rest day"
+                            if(title == "") hide = "hidden";
+                            if(title == "") title = "Rest day"
                             var obj = `
                             <div class="titleH4 placeholderColour">
                               ${capitalize(element)}
@@ -143,7 +150,7 @@
         <div class="titleH2 info">
           ${key}
 </div>
-<img src="${element[key].image}" alt="" loading="lazy">
+<img src="/workoutImages/${element[key].image}.webp" alt="" loading="lazy">
 <div class="titleH4 lightText">
                               ${element[key].description}
                     </div>

@@ -21,7 +21,7 @@
       class="standardInput" onkeyup="codeSearch()">
       <div class="spacing5"></div>
       <% for(var i = 0; i < plans.length; i++) { %>
-        <div class="atelierContainer participantContainer grayShadowNoOffset workout<%=plans[i].id%>" onclick="redirect('/admin/workoutPlans/<%=plans[i].id%>')">
+        <div class="atelierContainer participantContainer grayShadowNoOffset wokroutAdminSearch workout<%=plans[i].id%>" onclick="redirect('/admin/workoutPlans/<%=plans[i].id%>')">
             <div class="participantInfo">
     
             <div class="aterlierTitle participantName titleH3 titleNoMargin">
@@ -39,7 +39,6 @@
         <img class="arrow" src="/images/arrow.svg" alt="">
             
           </div>
-          <div class="spacing5"></div>
       <% } %>
 
     </div>
