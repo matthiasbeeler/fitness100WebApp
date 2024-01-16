@@ -93,7 +93,6 @@ exports.signup = function (request, response, database) {
     //Firstname, email and password
     console.log(request.body.code)
     if (
-      !request.body.code ||
       !request.body.lastName ||
       !request.body.firstName ||
       !request.body.email ||
@@ -110,7 +109,6 @@ exports.signup = function (request, response, database) {
       validator.isEmpty(firstName) ||
       validator.isEmpty(email) ||
       validator.isEmpty(lastName) ||
-      validator.isEmpty(workoutCode) ||
       validator.isEmpty(password)
     )
       return response.json({ success: false, error: 1, message:"Bitte fülle alle Felder aus." });

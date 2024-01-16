@@ -21,7 +21,7 @@ router.all(["/", "/signup"], function (req, res, next) {
     if(jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).loggedin) return res.redirect('/user')
   }
   if(!req.cookies.FitnessAuth){
-    if(!jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).loggedin) return next()
+    return next()
   }
   
     
