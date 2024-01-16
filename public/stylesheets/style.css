@@ -141,6 +141,12 @@ body, html{
   font-weight: 600;
 }
 
+.textH2{
+  margin-left: 4%;
+  font-size: 150%;
+  font-weight: normal;
+}
+
 .lightText{
   font-weight: normal
 }
