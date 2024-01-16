@@ -10,7 +10,10 @@
                     backLink: "redirect(`/admin`)" })%>
                     <div class="spacing13"></div>
                     <center>
+                    <div class="titleH3" style="display: none;" class="showCode" id="workoutSuccess">Workout erfolgreich erstellt; WorkoutCode (zum Kopieren drücken):</div>
                     <div class="titleH2" style="display: none;" id="workoutCode"></div>
+                    <div class="titleH4" style="display: none;" id="workoutCodeCopied"></div>
+
                     </center>
                     <form>
                         <input type="text" id="title" required name="title"
@@ -321,7 +324,7 @@ function renameFile(originalFile, newName) {
                                 class="standardInput" style="display: none;" onkeyup="" value="${id}">
 
                                 <div class="spacing5"></div>
-                                <div class="fileInput standardInput submit grayShadowNoOffset" onclick="document.querySelector('#fileInput').click();">
+                                <div class="fileInput standardInput submit grayShadowNoOffset" onclick="document.querySelector('.input${id}').click();">
         <img src="" alt="" class="filePreview ${id}" style="display: none;">
 
         <div class="placeholderText">
@@ -329,7 +332,7 @@ function renameFile(originalFile, newName) {
         </div>
 
         <input type="file" onchange="displayImage(this, '${id}');renameFile($(this)[0].files[0], uuidv4())" accept="image/*" id="fileInput" novalidate
-            name="fileInput" required style="display: none; color: transparent; border: none;">
+            name="fileInput" required style="display: none; color: transparent; border: none;" class="input${id}">
         
     </div>
 
@@ -365,7 +368,7 @@ function renameFile(originalFile, newName) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-
+                
                 $('.'+id).attr('src', e.target.result);
                 $('.'+id).parent().children('.filePreview').show();
                 $('.'+id).parent().children('.filePreview .placeholderText').html('Click to change');
@@ -400,9 +403,9 @@ function renameFile(originalFile, newName) {
                            $(".submit").addClass(`successButton`)
                            $('form').hide();
                            console.log(data)
-                           $('#workoutCode').show();
+                           $('#workoutCode, #workoutSuccess, #workoutCodeCopied').show();
                            $('#workoutCode').html(data.workoutCode)
-                           $('#workoutCode').attr("onclick", "navigator.clipboard.writeText('"+data.workoutCode+"'); $(this).html(''+$(this).html()+' - copied to clipboard')");
+                           $('#workoutCode').attr("onclick", "navigator.clipboard.writeText('"+data.workoutCode+"'); $('#workoutCodeCopied').html('Copied to clipboard')");
 
                 
 

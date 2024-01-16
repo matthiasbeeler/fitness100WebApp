@@ -48,8 +48,7 @@ const { createNewWorkout } = require("../javascripts/admin/newWorkout");
 	//account admin
 	router.get("/accounts", (req, res) => {
 		database.query(
-		  "SELECT * FROM accounts WHERE id NOT LIKE ? ORDER by active ASC",
-		  [jwt.verify(req.cookies.FitnessAuth, process.env.jwtSecret).id],
+		  "SELECT * FROM accounts ORDER by active ASC",
 		  function (err, results, fields) {
 			res.render("loggedin/admin/accounts", { participants: results });
 		  }
