@@ -120,7 +120,18 @@ router.get("/images", function (req, res, next) {
 });
 
 router.get("/newWorkoutPlan", function (req, res, next) {
-	  res.render("loggedin/admin/newWorkoutPlan");
+	fs.readdir(process.cwd()+'/public/workoutImages/', (err, files) => {
+		var fileArray = []
+		files.forEach(element => {
+			fileArray.push(element)
+		});
+		var filesArray = JSON.stringify(fileArray)
+		res.render("loggedin/admin/newWorkoutPlan", {
+			files: JSON.parse(filesArray),
+		  });
+	  
+	});
+	 
 });
 
 router.post("/workoutImageUpload", function (req, res, next) {

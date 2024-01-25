@@ -9,9 +9,18 @@
         <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin`)"
           })%>
           <div class="spacing13"></div>
-          <div class=" submitButton submitDiv "  onclick="showLess('${element}')">
-            Neues Bild hochladen
-           </div>
+         
+           <div class="fileInput standardInput submit grayShadowNoOffset" onclick="document.querySelector('#fileInput').click();">
+            <img src="" alt="" class="filePreview" style="display: none;">
+    
+            <div class="placeholderText">
+                Neues Bild hochladen
+            </div>
+    
+            <input type="file" onchange="displayImage(this);renameFile($(this)[0].files[0], uuidv4())" accept="image/*" id="fileInput" novalidate
+                name="fileInput" required style="display: none; color: transparent; border: none;" class="input${id}">
+            
+        </div>
            <div class="spacing5"></div>
           <div class="imageMainContainer">
 
@@ -34,3 +43,107 @@
     </body>
 
   </html>
+
+  <script>
+        function displayImage(input, id) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                
+                $('.filePreview').attr('src', e.target.result);
+                $('.filePreview').show();
+                $('.fileInput .placeholderText').html('');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+        imageUpload("filePreview", input)
+    }
+function uuidv4() {
+  return "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+function renameFile(originalFile, newName) {
+    Object.defineProperty(originalFile, 'name', {
+  writable: true,
+  value: newName
+});
+}
+    function imageUpload(id, input){
+    setTimeout(() => {
+        var formData = new FormData();
+           formData.append('changeElement', "image")
+           formData.append('image', $("."+id).parent().children('#fileInput')[0].files[0]);
+           formData.append('id', uuidv4());
+
+       try {
+
+           $.ajax({
+               url: '/admin/workoutImageUpload/',
+               type: 'POST',
+               processData: false,
+               contentType: false,
+               async: false,
+               cache: false,
+               data: formData,
+               crossDomain: true,
+               success: function (data, status, xhr) {
+                   if (data) {
+
+                       if (data.success == true) {
+                           $(".submit").val("Success")
+                           $(".submit").addClass(`successButton`)
+                           $('.fileInput .placeholderText').html('');
+                           setTimeout(() => {
+                            location.reload();
+                          }, 1000);
+
+                       }
+                       if (data.success == false) {
+                        
+                           $(".submit").val("Profilbild updaten")
+                           $('.submit').prop('disabled', false);
+                           $('.infoContainer').show()
+                           $('.infoContainer .info').html(data.message)
+                           $(".content").css("opacity", "1");
+                           console.error("imageupload ", id, " errored")
+
+                           
+                       }
+                   }
+
+               },
+               error: function (jqXHR, textStatus, err) {
+                   $(".content").css("opacity", "1");
+
+                   $('.fileInput').show()
+                   $('.infoContainer').show()
+                   $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+
+                   $(".submit").val("Profilbild updaten")
+                   $('.submit').prop('disabled', false);
+                   console.error("imageupload ", id, " errored")
+
+               }
+           });
+
+
+       } catch (error) {
+           console.log(error)
+           $(".content").css("opacity", "1");
+           $('.infoContainer').show()
+           $('.fileInput').show()
+           $('.infoContainer .info').html("An error occerd whilst communication with our server.")
+           $(".submit").val("Profilbild updaten")
+           $('.submit').prop('disabled', false);
+           console.error("imageupload ", id, " errored")
+
+       }
+
+        
+    }, 1000);
+   }
+  </script>

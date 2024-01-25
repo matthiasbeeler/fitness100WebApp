@@ -220,7 +220,7 @@ select{
 .submitDiv{
   width: 86%;
   text-align: center;
-  z-index: 99;
+  z-index: 2;
   position: relative;
 }
 .submitButtonNoMargin{
@@ -388,7 +388,7 @@ margin-right: 0;
 }
 
 .topContent .backButton{
-  z-index: 12;
+  z-index: 4;
   position: relative;
 }
 
@@ -689,11 +689,11 @@ div.fileInput{
   width: 100%;
   height: 100vh;
   position: fixed;
-  z-index: 1;
+  z-index: 5;
   top: 0px;
   left: 0px;
-  backdrop-filter: blur(5px);
-  background-color: #ffffffa8;
+  backdrop-filter: blur(9px);
+  background-color: #ffffffbd;
 }
 .workoutOverlay{
   width: 100%;
@@ -705,6 +705,12 @@ div.fileInput{
   z-index: 100;
   height: 100vh;
 }
+
+.imageSelectOverlay .imageMainContainer{
+  max-height: 70%;
+  overflow-y: scroll;
+}
+
  .workout img{
   width: 94%;
   height: auto;

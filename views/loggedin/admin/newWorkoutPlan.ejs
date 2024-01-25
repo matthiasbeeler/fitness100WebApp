@@ -205,6 +205,23 @@
           </div>
                     </form>
 
+
+                    <div class="imageSelectOverlay overlay" style="display: none;">
+                        <div class="spacing5"></div>
+                        <div class="titleH2">Bildauswahl</div>
+                        <div style="display: none;" class="currentId">
+
+                        </div>
+                        <div class="imageMainContainer">
+
+                        </div>
+                        <div onclick="$(this).parent().hide()"
+            class="smallSubmitText submitButton submitDiv bottomFixedButton">
+           Abbrechen
+          </div>
+                    </div>
+
+
             </div>
             <div class="spacing13"></div>
             <%- include('../../modules/footer.ejs')%>
@@ -212,6 +229,16 @@
         </body>
 
     </html>
+
+    <script defer>
+        var images = <%-JSON.stringify(files)%>;
+        var imageObj = "";
+      images.forEach(image =>{
+        
+         imageObj = imageObj + `<div class="imageContainer" onclick="chooseImage('${image}')"><img src="/workoutImages/${image}" alt=""></div>`;
+      })
+      $('.imageMainContainer').append(imageObj);
+    </script>
 
     <script>
         var jsonCode = {
@@ -295,7 +322,7 @@ function renameFile(originalFile, newName) {
                         "sets": $(exercise).children("#sets").val(),
                         "description": $(exercise).children(".description").val(),
                         "repetitions": $(exercise).children("#reps").val(),
-                        "image": $(exercise).children("#imageId").val(),
+                        "image": $(exercise).children(".imageId").val(),
 
                     }
                     jsonCode.workouts[day].push(insert)
@@ -318,22 +345,19 @@ function renameFile(originalFile, newName) {
                                 onchange="$(this).css('border', '0.5px solid black');"
                                 oninvalid="$(this).css('border', '2px solid red');" placeholder="Übungstitel"
                                 class="standardInput" onkeyup="">
-                                <input type="text" id="imageId" required name="exerciseTitle"
+                                <input type="text" class="imageId" id="imageId${id}" required name="exerciseTitle"
                                 onchange="$(this).css('border', '0.5px solid black');"
                                 oninvalid="$(this).css('border', '2px solid red');" placeholder="Übungstitel"
-                                class="standardInput" style="display: none;" onkeyup="" value="${id}">
+                                class="standardInput" style="display: none;" onkeyup="">
 
                                 <div class="spacing5"></div>
-                                <div class="fileInput standardInput submit grayShadowNoOffset" onclick="document.querySelector('.input${id}').click();">
+                                <div class="fileInput standardInput submit grayShadowNoOffset" onclick="showImageSelect('${id}');">
         <img src="" alt="" class="filePreview ${id}" style="display: none;">
 
         <div class="placeholderText">
-            Click to add new image
+            Bild auswählen
         </div>
 
-        <input type="file" onchange="displayImage(this, '${id}');renameFile($(this)[0].files[0], uuidv4())" accept="image/*" id="fileInput" novalidate
-            name="fileInput" required style="display: none; color: transparent; border: none;" class="input${id}">
-        
     </div>
 
     <div class="spacing5"></div>
@@ -361,6 +385,27 @@ function renameFile(originalFile, newName) {
     `;
 
     $('.'+day+" .exercisesContainer").append(obj)
+    }
+
+
+
+    function showImageSelect(id){
+        $('.currentId').html(id);
+        $('.imageSelectOverlay').show()
+    }
+
+    function chooseImage(image){
+        console.log("image: "+image)
+        const currentExerciseId = $('.currentId').html();
+        $('.'+currentExerciseId).attr('src', "/workoutImages/"+image)
+        $('.'+currentExerciseId).parent().children('.filePreview').show();
+        console.log($('#imageId'+currentExerciseId).val())
+        $('#imageId'+currentExerciseId).val(image);
+        console.log("value: "+$('#imageId'+currentExerciseId).val())
+
+        console.log(currentExerciseId)
+
+        $('.imageSelectOverlay').hide()
     }
 
     function displayImage(input, id) {
