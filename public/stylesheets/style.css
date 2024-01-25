@@ -693,6 +693,8 @@ div.fileInput{
   top: 0px;
   left: 0px;
   backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+
   background-color: #ffffffbd;
 }
 .workoutOverlay{
