@@ -13,6 +13,11 @@
 
             </div>
           </div>
+          
+          <div class="aterlierTitle titleH2 ">
+            <%=workout.title %>
+          </div>
+          <div class="spacing5"></div>
           <div class="aterlierTitle titleH3 ">
             Code: <%=workout.workoutCode %>
           </div>
@@ -36,7 +41,11 @@
             Momentan nicht in Benutzung
           </div>
           <%}%>
-
+          <div class="spacing5"></div>
+          <div onclick="redirect('/admin/editWorkout/<%=workout.id %>')"
+            class="smallSubmitText submitButton submitDiv">
+            Workoutplan bearbeiten
+          </div>
         <br>
                   <div class="workoutContent">
                    <div class="workoutOverlay">

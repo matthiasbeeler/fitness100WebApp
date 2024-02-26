@@ -15,6 +15,7 @@ INSERT INTO fitness100.workouts (id, workoutCode, `timestamp`)
 const { updateAccount } = require("../javascripts/admin/accounts");
 const { uploadWorkoutImage } = require("../javascripts/updateImage");
 const { createNewWorkout } = require("../javascripts/admin/newWorkout");
+const { updateWorkout } = require("../javascripts/admin/updateWorkout");
 	
 	router.all("*", function (req, res, next) {
 	  try {
@@ -106,6 +107,40 @@ const { createNewWorkout } = require("../javascripts/admin/newWorkout");
 });
 
 
+router.get("/editWorkout/:id", function (req, res, next) {
+	database.query(
+	  `SELECT * FROM workouts where id = ?;`,[req.params.id],
+	  function (err, results, fields) {
+		if(!results.length > 0) return res.redirect('/admin');
+		var workout = results[0];
+		console.log(err)
+		if(err)  ateliers = [];
+		database.query(
+		  `SELECT * FROM accounts where code = ?;`,[workout.workoutCode],
+		  function (err, results, fields) {
+			let account;
+			if(results.length > 0)  account = results[0];
+			workout.timestamp = moment.unix(workout.timestamp*0.001).format("HH:mm, DD.MM.YYYY")
+			fs.readdir(process.cwd()+'/public/workoutImages/', (err, files) => {
+				var fileArray = []
+				files.forEach(element => {
+					fileArray.push(element)
+				});
+				var filesArray = JSON.stringify(fileArray)
+			  
+	res.render("loggedin/admin/workoutEdit", {
+	  workout: workout,
+	  files: JSON.parse(filesArray),
+	  account: account
+	});
+  });
+});
+
+});
+});
+
+
+
 router.get("/images", function (req, res, next) {
 	fs.readdir(process.cwd()+'/public/workoutImages/', (err, files) => {
 		var fileArray = []
@@ -135,7 +170,6 @@ router.get("/newWorkoutPlan", function (req, res, next) {
 });
 
 router.post("/workoutImageUpload", function (req, res, next) {
-
 	uploadWorkoutImage(req, res, database)
 });
 
@@ -144,6 +178,9 @@ router.post("/createNewWorkout", function (req, res, next) {
 	createNewWorkout(req, res, database)
 });
 
+router.post("/updateWorkout", function (req, res, next) {
+	updateWorkout(req, res, database)
+});
 
 
 	module.exports = router;
