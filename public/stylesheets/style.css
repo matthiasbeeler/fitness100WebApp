@@ -839,6 +839,8 @@ border-radius: 20px;
   margin-left: 16%;
 }
 
+
+
 @media (min-width: 800px) {
 
   .content, .cookieNoticeBackground, .overlay, .mainSelect {
@@ -868,4 +870,35 @@ border-radius: 20px;
 
 .wokroutAdminSearch{
   margin-bottom: 5%;
+}
+@media print{
+  body, html{
+    background: white;
+  }
+  .printContent{
+    width: 100%;
+    margin-left: 0px;
+    .backButton, .submitButton, .printHide{
+      display: none !important;
+    }
+    .expandWorkout{
+      background-color: transparent;
+    }
+    .workout{
+      display: inline-block;
+      width: 25%;
+      margin-left: 2%;
+      box-shadow: 0px 0px 7px #dcdcdc;
+    }
+    .expandWorkout{
+      margin-top: 0px;
+    }
+    .atelierContainer{
+      padding: 1.5%;
+    }
+
+}
+.footer{
+  display: none;
+}
 }

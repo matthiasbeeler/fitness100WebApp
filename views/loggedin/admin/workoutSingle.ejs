@@ -5,9 +5,9 @@
   <%- include('../../modules/head.ejs', {title: title})%>
 
     <body>
-      <div class="content">
+      <div class="content printContent">
         <%- include('../../modules/top.ejs', {title: title, noLogo: true, noBack: false, backLink: "redirect(`/admin`)"})%>
-        <div class="spacing5"></div>
+        <div class="spacing5 printHide"></div>
           <div class="infoContainer redInnerShadowNoOffset" style="display: none;">
             <div class="titleH4 info">
 
@@ -25,26 +25,32 @@
           <div class="aterlierTitle titleH4 ">
             Erstellungszeit: <%=workout.timestamp %>
           </div>
-          <br>
-          <div class="aterlierTitle titleH4 ">
+          <br class="printHide">
+          <div class="aterlierTitle titleH4 printHide">
             Erstellt von: <%=workout.createdBy %>
           </div>
-          <br>
+          <br class="printHide">
           <% if(account){%>
-          <a href="/admin/accounts/<%=account.id%>" target="_blank">
+          <a class="printHide" href="/admin/accounts/<%=account.id%>" target="_blank">
           <div class="aterlierTitle titleH4 ">
             Momentan benutzt von:  <%=account.lastName %>, <%=account.firstName %>
           </div>
         </a>
         <%}else{%>
-          <div class="aterlierTitle titleH4 ">
+          <div class="aterlierTitle titleH4 printHide ">
             Momentan nicht in Benutzung
           </div>
           <%}%>
-          <div class="spacing5"></div>
+          <div class="spacing5 printHide"></div>
           <div onclick="redirect('/admin/editWorkout/<%=workout.id %>')"
             class="smallSubmitText submitButton submitDiv">
             Workoutplan bearbeiten
+          </div>
+          <div class="spacing5"></div>
+
+          <div onclick="showMore('monday');showMore('tuesday');showMore('wednesday');showMore('thursday');showMore('friday');showMore('saturday');showMore('sunday');setTimeout(() => {window.print()}, 2000);"
+            class="smallSubmitText submitDiv subtileButton submitButton button grayShadowNoOffset submit" style="display: block;">
+            Workoutplan drucken
           </div>
         <br>
                   <div class="workoutContent">
@@ -70,12 +76,12 @@
 }
                           var days = {
                             "monday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
-                            "tuesday": ["tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "monday"],
-                            "wednesday": ["wednesday", "thursday", "friday", "saturday", "sunday", "monday", "tuesday"],
-                            "thursday": ["thursday", "friday", "saturday", "sunday", "monday", "tuesday", "wednesday"],
-                            "friday": ["friday", "saturday", "sunday", "monday", "tuesday", "wednesday", "thursday"],
-                            "saturday": ["saturday", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday"],
-                            "sunday": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
+                            "tuesday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+                            "wednesday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+                            "thursday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+                            "friday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+                            "saturday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"],
+                            "sunday": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
                           }
 
                           var date = new Date();
@@ -125,7 +131,8 @@
           workout = workout + `<li>${key}  -  ${element[key].sets}x${element[key].repetitions} </li>`
         }
         });
-        $('.titleH4.placeholderColour').first().html('Today')
+        
+        //$('.titleH4.placeholderColour').first().html('Today')
         if(title == "Rest day") $('.'+element+' .submitButton').hide()
         $('.atelierContainer.'+element+' .infoList').append(workout)
                           });
@@ -151,6 +158,7 @@
 ` ; $('.innerWorkout').append(obj)
 
     }
+    showLess(dayName)
       $('.titleH1').html(data.week[dayName].title)
       data.workouts[dayName].forEach(element => {
         for (var key in element) {
@@ -168,10 +176,10 @@
                     </div>
                   </div>
 
-                    <div class="spacing5"></div>
+                    <div class="spacing5 printHide"></div>
         `;
         }
-        
+        $('.'+dayName+' .seperator').removeClass('hidden')
   $('.'+dayName+' .expandWorkout').append(obj)
   $('.'+dayName+' .expandWorkout').show()
   $('.'+dayName+' .showMore').hide()
